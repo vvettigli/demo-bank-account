@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-NumeriFibonacciApplication<numeri_fibonacci>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.numeri_fibonacci.NumeriFibonacciApplication",
+            "projectName": "numeri_fibonacci",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
