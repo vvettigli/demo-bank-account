@@ -4,7 +4,7 @@
             "type": "java",
             "name": "Spring Boot-ContoApplication<conto>",
             "request": "launch",
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/conto",
             "mainClass": "contocorrente.ContoApplication",
             "projectName": "conto",
             "args": "",

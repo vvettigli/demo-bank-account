@@ -20,10 +20,7 @@ public class ContoApplication implements CommandLineRunner {
 
 
 
-    @Autowired
-	UserRepository userRepository;
-
-	private static final Logger log = LoggerFactory.getLogger(ContoApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(ContoApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(ContoApplication.class, args);
 		log.info("HELLO");
@@ -32,8 +29,7 @@ public class ContoApplication implements CommandLineRunner {
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		User user = new User("2314","suca","checco");
-		userRepository.save (user);
+		
 		
 	}
 
