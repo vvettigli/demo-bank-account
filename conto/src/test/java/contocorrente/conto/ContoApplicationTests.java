@@ -1,4 +1,4 @@
-package conto_corrente.conto;
+package contocorrente.conto;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

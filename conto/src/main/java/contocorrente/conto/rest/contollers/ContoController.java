@@ -1,4 +1,4 @@
-package conto_corrente.conto.A.restContoller;
+package contocorrente.conto.rest.contollers;
 
 import java.util.List;
 
@@ -6,43 +6,49 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import conto_corrente.Entity.operation;
-import conto_corrente.Entity.user;
+import contocorrente.dao.UserRepository;
+import contocorrente.entities.Operation;
+import contocorrente.entities.User;
 
 @RestController
-public class restController {
+public class ContoController {
 
-    user user;
-    operation operation;
 
-    @RequestMapping("/hello")
+    @Autowired
+	UserRepository userRepository;
+    
+    User user;
+    Operation operation;
+
+    @GetMapping("/hello")
     public String hello(){
         return "HELLO";
     }
-    @RequestMapping("/newuser")
-    public String newUser(@Valid user user, BindingResult result){
+    @GetMapping("/newuser")
+    public String newUser(@Valid User user, BindingResult result){
         if(result.hasErrors()){
            return result.toString();
         }
         
-        return "user add " + user.getId()+ " " + user.getUsername() + " saldo: " + user.getSaldo();
+        return "user add " + user.getId()+ " " + user.getUserName() + " saldo: " ;
     }
-    @RequestMapping("/user")
+    @GetMapping("/user")
     public String user(String id){
         if(id == user.getId()){
             return user.toString();
         }
         return "l'utente non esiste"; 
     }
-    @RequestMapping("/deposito")
-    public String deposito(operation operation){
-        if(user.getId()== operation.getIdUser1()){
+    @GetMapping("/deposito")
+    public String deposito(Operation operation){
+        if(user.getId()== operation.getUserID()){
         
-        user.setSaldo(user.getSaldo()+this.operation.getValore());
-        return "deposito effetuato di: " + operation.getValore() + " ora il tuo saldo è di: " + user.getSaldo();
+       // user.setSaldo(user.getSaldo()+this.operation.getValore());
+        return "deposito effetuato di: " + operation.getValore() ;
         }else{
             return "non esiste un account con id = " + operation.getId();
         }

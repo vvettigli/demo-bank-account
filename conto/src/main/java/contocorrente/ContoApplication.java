@@ -1,4 +1,4 @@
-package conto_corrente.conto.A;
+package contocorrente;
 
 
 import org.slf4j.Logger;
@@ -9,17 +9,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import conto_corrente.Dao.userDao;
-import conto_corrente.Entity.*;
+import contocorrente.dao.UserRepository;
+import contocorrente.entities.*;
 
 
-@SpringBootApplication
-@EntityScan("conto_corrente.Entity")   
-
+@SpringBootApplication(
+	/*scanBasePackages = "contocorrente"*/)
+//@EntityScan("contocorrente")   
 public class ContoApplication implements CommandLineRunner {
 
-	
-	userDao user;
+
+
+    @Autowired
+	UserRepository userRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(ContoApplication.class);
 	public static void main(String[] args) {
@@ -30,7 +32,8 @@ public class ContoApplication implements CommandLineRunner {
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		user.save(new user("2314","suca","checco",2000.0));
+		User user = new User("2314","suca","checco");
+		userRepository.save (user);
 		
 	}
 

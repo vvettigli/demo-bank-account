@@ -12,26 +12,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@ToString
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 
 @Entity
-@Table(name = "USERS")
-public class User {
-
-	@NotEmpty @NotNull @NotBlank
+@Table(name = "OPERATIONS")
+public class Conto {
     @Id
-    @Column(name = "ID")
+    @Column(name="ID")
+    @NotNull @NotBlank @NotEmpty
     private String id;
     
-    @NotEmpty @NotNull @NotBlank
-    @Column(name = "USERNAME")
-    private String userName;
+    @Column(name="USER_ID")
+    @NotNull @NotBlank @NotEmpty
+    private String userID;
     
-    @NotEmpty @NotNull @NotBlank
-    @Column(name = "PASSWORD")
-    private String password;
+    @Column(name="SALDO")
+    @NotNull @NotBlank @NotEmpty
+    private Double saldo;
 }

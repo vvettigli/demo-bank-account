@@ -1,4 +1,4 @@
-package conto_corrente.Entity;
+package contocorrente.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,16 +15,19 @@ import lombok.Setter;
 
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
+
 @Entity
-@Table(name = "operation")
-public class operation {
+@Table(name = "OPERATIONS")
+public class Operation {
     @Id
     @Column(name="ID")
     @NotNull @NotBlank @NotEmpty
     private String id;
-    @Column(name="IDUSER1")
+    
+    @Column(name="USER_ID")
     @NotNull @NotBlank @NotEmpty
-    private String idUser1;
+    private String userID;
+    
     @Column(name="VALORE")
     @NotNull @NotBlank @NotEmpty
     private Double valore;
