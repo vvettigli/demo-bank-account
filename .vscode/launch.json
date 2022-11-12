@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ContoApplication<conto>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "contocorrente.ContoApplication",
+            "projectName": "conto",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
