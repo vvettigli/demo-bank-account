@@ -31,6 +31,6 @@ public class Operation {
     private String userID;
     
     @Column(name="VALORE")
-    @NotNull @NotBlank @NotEmpty
+    @NotNull(message = "inserire il valore")
     private Double valore;
 }

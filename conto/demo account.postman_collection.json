@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "48c53c30-18e6-46e1-9eb1-d16731fe237e",
+		"_postman_id": "d5a6d78e-8a70-46f2-a328-0d6099a9c102",
 		"name": "demo account",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23998983"
+		"_exporter_id": "23548465"
 	},
 	"item": [
 		{
@@ -68,6 +68,121 @@
 					"port": "8093",
 					"path": [
 						"newuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deposito",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"id\" :\"34\",\r\n    \"userID\" : \"1234\",\r\n    \"valore\" : 2000.0\r\n\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8093/deposito",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8093",
+					"path": [
+						"deposito"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create Conto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"id\" :\"1\",\r\n    \"userID\"   : \"1234\",\r\n    \"saldo\"  :0.0\r\n\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8093/createconto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8093",
+					"path": [
+						"createconto"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "userId",
+							"value": "1234",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "saldo",
+							"value": "0",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get conto",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"id\" :\"1\",\r\n    \"userId\"   : \"1234\",\r\n    \"valore\"  : 2000\r\n\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8093/conto/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8093",
+					"path": [
+						"conto",
+						"1"
 					]
 				}
 			},

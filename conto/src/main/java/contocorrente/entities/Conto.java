@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-@Table(name = "OPERATIONS")
+@Table(name = "CONTO")
 public class Conto {
     @Id
     @Column(name="ID")
@@ -31,6 +31,6 @@ public class Conto {
     private String userID;
     
     @Column(name="SALDO")
-    @NotNull @NotBlank @NotEmpty
+    @NotNull (message = "inserire il saldo")
     private Double saldo;
 }

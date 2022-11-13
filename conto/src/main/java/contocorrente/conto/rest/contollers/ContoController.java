@@ -1,6 +1,7 @@
 package contocorrente.conto.rest.contollers;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
+import contocorrente.dao.ContoRepository;
+import contocorrente.dao.OperationRepository;
 import contocorrente.dao.UserRepository;
+import contocorrente.entities.Conto;
 import contocorrente.entities.Operation;
 import contocorrente.entities.User;
 
@@ -26,7 +30,10 @@ public class ContoController {
 
     @Autowired
 	UserRepository userRepository;
-    
+    @Autowired
+    OperationRepository operationRepository;
+    @Autowired
+    ContoRepository contoRepository;
    
  
 
@@ -43,26 +50,43 @@ public class ContoController {
 
         return user; 
     }
+    @PostMapping("/createconto")
+    public Conto createConto(@RequestBody @Valid Conto conto, BindingResult result){
+        if(result.hasErrors()){
+           throw new  RuntimeException(result.toString());
+        }
+        conto = contoRepository.save(conto);
+        
+        return conto; 
+    }
     @GetMapping("/user/{id}")
     public User user(@PathVariable String id ){
 
         User user =  userRepository.getReferenceById(id);
         return user; 
     }
-    @GetMapping("/deposito")
-    public String deposito(Operation operation){
-
-        return null;
-        /* 
-        if(user.getId()== operation.getUserID()){
+    @PostMapping("/deposito")
+    public String deposito(@RequestBody @Valid Operation operation, BindingResult result){
+        if(result.hasErrors()){
+            throw new  RuntimeException(result.toString());
+         }
+        operationRepository.save(operation);
+        Conto conto = contoRepository.findByUserID(operation.getUserID());
+        Double x = conto.getSaldo();
+        Double y = operation.getValore(); 
+        conto.setSaldo(x+y);
+        contoRepository.save(conto);
+        return "deposito effetuato di: " + operation.getValore();
         
-       // user.setSaldo(user.getSaldo()+this.operation.getValore());
-        return "deposito effetuato di: " + operation.getValore() ;
-        }else{
-            return "non esiste un account con id = " + operation.getId();
         }
-        */
+    @GetMapping("/conto/{id}")
+    public Conto conto(@PathVariable String id){
+
+        Conto conto = contoRepository.getReferenceById(id);
+        return conto;
     }
 
-}
+    }
+
+
  
