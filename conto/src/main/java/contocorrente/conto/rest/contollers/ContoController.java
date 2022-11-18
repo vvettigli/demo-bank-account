@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
-import contocorrente.dao.ContoRepository;
-import contocorrente.dao.OperationRepository;
-import contocorrente.dao.UserRepository;
+import contocorrente.conto.services.ContoService;
+import contocorrente.conto.services.OperationService;
+import contocorrente.conto.services.UserService;
+
 import contocorrente.entities.Conto;
 import contocorrente.entities.Operation;
 import contocorrente.entities.User;
@@ -28,11 +28,11 @@ public class ContoController {
 
 
     @Autowired
-	UserRepository userRepository;
+	UserService userService;
     @Autowired
-    OperationRepository operationRepository;
+    OperationService operationService;
     @Autowired
-    ContoRepository contoRepository;
+    ContoService contoService;
    
  
 
@@ -45,7 +45,7 @@ public class ContoController {
         if(result.hasErrors()){
            throw new  RuntimeException(result.toString());
         }
-        user = userRepository.save(user);
+        user = userService.addUser(user);
 
         return user; 
     }
@@ -54,34 +54,34 @@ public class ContoController {
         if(result.hasErrors()){
            throw new  RuntimeException(result.toString());
         }
-        conto = contoRepository.save(conto);
+        conto = contoService.addConto(conto);
         
         return conto; 
     }
     @GetMapping("/user/{id}")
     public User user(@PathVariable String id ){
 
-        User user =  userRepository.getReferenceById(id);
+        User user =  userService.getUser(id);
         return user; 
     }
     @PostMapping("/deposito")
-    public String deposito(@RequestBody @Valid Operation operation, BindingResult result){
+    public Conto deposito(@RequestBody @Valid Operation operation, BindingResult result){
         if(result.hasErrors()){
             throw new  RuntimeException(result.toString());
          }
-        operationRepository.save(operation);
-        Conto conto = contoRepository.findByUserID(operation.getUserID());
-        Double x = conto.getSaldo();
-        Double y = operation.getValore(); 
-        conto.setSaldo(x+y);
-        contoRepository.save(conto);
-        return "deposito effetuato di: " + operation.getValore();
+        operationService.addOperation(operation);
+        Conto conto = contoService.getConto(operation.getUserID());
+        Double saldo = conto.getSaldo();
+        Double valore = operation.getValore(); 
+        conto.setSaldo(saldo+valore);
+        contoService.addConto(conto);
+        return conto;
         
         }
     @GetMapping("/conto/{id}")
     public Conto conto(@PathVariable String id){
 
-        Conto conto = contoRepository.getReferenceById(id);
+        Conto conto = contoService.getConto(id);
         return conto;
     }
 
