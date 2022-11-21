@@ -1,36 +1,52 @@
 package contocorrente.conto.services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import contocorrente.dao.UserRepository;
-import contocorrente.entities.User;
-
+import contocorrente.conto.Converter.UserConverter;
+import contocorrente.conto.HandleException.NotFoundException;
+import contocorrente.conto.dao.UserRepository;
+import contocorrente.conto.dto.UserDto;
+import contocorrente.conto.entities.User;
+@Service
 public class UserService {
+
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserConverter userConverter;
 
-    public User addUser(User conto){
-        return userRepository.save(conto);
+    public User addUser(UserDto userDto){
+
+       User user = userConverter.dtoToEntity(userDto);
+
+        return userRepository.save(user);
     }
 
-    public List<User> getAllUser(){
+    public List<UserDto> getAllUser(){
 
-        List<User> conti= new ArrayList<User>();
-        userRepository.findAll().forEach(conti::add);
-        return conti;
+        List<User> listaConto = userRepository.findAll().stream().collect(Collectors.toList());
 
+        return userConverter.allEntityToDto(listaConto);
     }
-    public User getUser(String id){
-        return userRepository.getById(id);
+
+    public UserDto getUser(Integer id){ 
+
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Utente con id " + id + " non esiste ") );
+        
+            return userConverter.entityToDto(user);
+           
     }
 
     public User updateUser(int id, User conto){
         return userRepository.save(conto);
     }
-    public void deleteUserById(String id){
+
+    public void deleteUserById(Integer id){
         userRepository.deleteById(id);
     }
     

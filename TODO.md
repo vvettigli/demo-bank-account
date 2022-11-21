@@ -16,7 +16,10 @@
      - ~~4.1 Creare le entities class~~
 
      - ~~4.2 Implementare le classi per il cobto corrente~~
-
-6. Logs  
-7. Dependency Injection 
-8. Spring  ( AProfondimento ) 
+6. ~~creare DTO~~
+      
+7. gestione delle exc nei servizi e controller
+8. Logs  
+     - SLF4J spring
+9. Dependency Injection 
+10. Spring  (Approfondimento) 

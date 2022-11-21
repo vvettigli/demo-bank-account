@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import contocorrente.conto.Converter.UserConverter;
+import contocorrente.conto.dto.ContoDto;
+import contocorrente.conto.dto.UserDto;
+import contocorrente.conto.entities.Conto;
+import contocorrente.conto.entities.Operation;
+import contocorrente.conto.entities.User;
 import contocorrente.conto.services.ContoService;
 import contocorrente.conto.services.OperationService;
 import contocorrente.conto.services.UserService;
-
-import contocorrente.entities.Conto;
-import contocorrente.entities.Operation;
-import contocorrente.entities.User;
 
 @RestController
 public class ContoController {
@@ -33,6 +35,8 @@ public class ContoController {
     OperationService operationService;
     @Autowired
     ContoService contoService;
+    @Autowired
+    UserConverter userConverter;
    
  
 
@@ -41,50 +45,59 @@ public class ContoController {
         return "HELLO";
     }
     @PostMapping("/newuser")
-    public User newUser(@RequestBody @Valid User user, BindingResult result){
+    public UserDto newUser(@RequestBody @Valid UserDto userDto, BindingResult result){
         if(result.hasErrors()){
            throw new  RuntimeException(result.toString());
         }
-        user = userService.addUser(user);
-
-        return user; 
+        userService.addUser(userDto);
+        return userDto;
+        
     }
     @PostMapping("/createconto")
-    public Conto createConto(@RequestBody @Valid Conto conto, BindingResult result){
+    public ContoDto createConto(@RequestBody @Valid Conto conto, BindingResult result){
         if(result.hasErrors()){
            throw new  RuntimeException(result.toString());
         }
-        conto = contoService.addConto(conto);
         
-        return conto; 
+        return contoService.addConto(conto); 
     }
     @GetMapping("/user/{id}")
-    public User user(@PathVariable String id ){
+    public UserDto user(@PathVariable Integer id ){
 
-        User user =  userService.getUser(id);
-        return user; 
+        return userService.getUser(id);
+         
     }
-    @PostMapping("/deposito")
-    public Conto deposito(@RequestBody @Valid Operation operation, BindingResult result){
-        if(result.hasErrors()){
-            throw new  RuntimeException(result.toString());
-         }
-        operationService.addOperation(operation);
-        Conto conto = contoService.getConto(operation.getUserID());
-        Double saldo = conto.getSaldo();
-        Double valore = operation.getValore(); 
-        conto.setSaldo(saldo+valore);
-        contoService.addConto(conto);
-        return conto;
+    // @PostMapping("/deposito")
+    // public Conto deposito(@RequestBody @Valid Operation operation, BindingResult result){
+    //     if(result.hasErrors()){
+    //         throw new  RuntimeException(result.toString());
+    //      }
+    //     operationService.addOperation(operation);
+    //     Conto conto = contoService.getConto(operationService.getUserID());
+    //     Double saldo = conto.getSaldo();
+    //     Double valore = operation.getValore(); 
+    //     conto.setSaldo(saldo+valore);
+    //     contoService.addConto(conto);
+    //     return conto;
         
-        }
-    @GetMapping("/conto/{id}")
-    public Conto conto(@PathVariable String id){
+    // }
 
-        Conto conto = contoService.getConto(id);
-        return conto;
+
+    @GetMapping("/conto/{id}")
+    public ContoDto conto(@PathVariable Integer id){
+
+        return contoService.getConto(id);
     }
 
+    // @GetMapping("/allconti")
+    // public List<ContoDto> Allconti(){
+    //     return contoService.getAllConti();
+    // }
+
+    // @PostMapping("/updateconto")
+    // public ContoDto updateConto(Integer id, Conto conto){
+    //     return contoService.updateConto(id, conto);
+    // }
     }
 
 
