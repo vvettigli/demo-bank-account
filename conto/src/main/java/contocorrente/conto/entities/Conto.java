@@ -1,7 +1,5 @@
 package contocorrente.conto.entities;
 
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,12 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.criteria.Fetch;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +40,7 @@ public class Conto {
     @NotNull(message = "inserire il saldo")
     private Double saldo;
 
+    @JsonManagedReference
     @OneToMany(
         mappedBy = "conto",
         fetch = FetchType.LAZY)
