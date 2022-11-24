@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import contocorrente.conto.Converter.ContoConverter;
 import contocorrente.conto.Converter.UserConverter;
 import contocorrente.conto.dto.ContoDto;
 import contocorrente.conto.dto.OperationDto;
@@ -42,6 +43,8 @@ public class ContoController {
     OperationService operationService;
     @Autowired
     ContoService contoService;
+    @Autowired
+    ContoConverter contoConverter;
     @Autowired
     UserConverter userConverter;
 
@@ -146,31 +149,19 @@ public class ContoController {
 
     }
     
-    // @PostMapping("/deposito")
-    // public Conto deposito(@RequestBody @Valid Operation operation, BindingResult result){
-    //     if(result.hasErrors()){
-    //         throw new  RuntimeException(result.toString());
-    //      }
-    //     operationService.addOperation(operation);
-    //     Conto conto = contoService.getConto(operationService.getUserID());
-    //     Double saldo = conto.getSaldo();
-    //     Double valore = operation.getValore(); 
-    //     conto.setSaldo(saldo+valore);
-    //     contoService.addConto(conto);
-    //     return conto;
+    @PostMapping("/deposito")
+    public ContoDto deposito(@RequestBody @Valid Operation operation){
+        OperationDto operationDto = operationService.addOperation(operation);
+        Conto conto = operationDto.getConto();
+        conto.setSaldo(conto.getSaldo() + operationDto.getAmmontare());
+        ContoDto contoDto = contoConverter.entityToDto(conto);
+        contoService.updateConto(contoDto);
+        return contoDto;
         
-    // }
+    }
 
 
    
-
-    
-
-    
-
-   
-
-
 
     
     

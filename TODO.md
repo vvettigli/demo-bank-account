@@ -18,8 +18,8 @@
      - ~~4.2 Implementare le classi per il cobto corrente~~
 6. ~~creare DTO~~
       
-7. gestione delle exc nei servizi e controller
-8. Logs  
-     - SLF4J spring
-9. Dependency Injection 
+7. ~~gestione delle exc nei servizi e controller~~
+8. ~~Logs~~  
+     - ~~SLF4J spring~~
+9. ~~Dependency Injection~~
 10. Spring  (Approfondimento) 
