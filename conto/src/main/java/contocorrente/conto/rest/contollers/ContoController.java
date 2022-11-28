@@ -40,7 +40,7 @@ public class ContoController {
     @Autowired
 	UserService userService;
     @Autowired
-    OperationService operationService;
+    OperationService operationServiceInvernale;
     @Autowired
     ContoService contoService;
     @Autowired
@@ -128,30 +128,36 @@ public class ContoController {
     @PostMapping("/operation")
     public OperationDto newOperation(@RequestBody Operation operation) {
         
-        return operationService.addOperation(operation);
+        return operationServiceInvernale.addOperation(operation);
     }
 
     @GetMapping("/operation/{id}")
     public OperationDto getOperation(@PathVariable Integer id){
 
-        return operationService.getOperation(id);
+        return operationServiceInvernale.getOperation(id);
     }
 
     @PutMapping("/operation")
     public OperationDto updateOperation(@RequestBody OperationDto operationDto){
 
-        return operationService.updateOperation(operationDto);
+        return operationServiceInvernale.updateOperation(operationDto);
     }
 
     @DeleteMapping("/operation/{id}")
     public void deleteOperation(@PathVariable Integer id){
-        operationService.deleteOperation(id);
+        operationServiceInvernale.deleteOperation(id);
 
     }
     
+    @DeleteMapping("/operation/deleteall/{id}")
+    public void deleteAllOperation(@PathVariable Integer id){
+        operationServiceInvernale.deleteAllOperation(id); 
+
+    }
+        
     @PostMapping("/deposito")
     public ContoDto deposito(@RequestBody @Valid Operation operation){
-        OperationDto operationDto = operationService.addOperation(operation);
+        OperationDto operationDto = operationServiceInvernale.addOperation(operation);
         Conto conto = operationDto.getConto();
         conto.setSaldo(conto.getSaldo() + operationDto.getAmmontare());
         ContoDto contoDto = contoConverter.entityToDto(conto);

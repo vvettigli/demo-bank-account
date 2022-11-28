@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
-public class UserDto {
-    Integer id;
-    String username;
-    String password;
+@Getter @Setter
+public class UserGiuridicoDto extends UserDto {
+     
+    private String partitaIva; 
+
 }
