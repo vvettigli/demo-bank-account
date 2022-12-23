@@ -12,5 +12,5 @@ import lombok.Setter;
 @Entity
 public class ContoPaypal extends Conto{
     
-    private String cartaDiCredito;
+     String cartaDiCredito;
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
-public class ContoDtoPaypal extends ContoDto {
+public class ContoPaypalDto extends ContoDto {
     
-    private String cartaDiCredito;
+     String cartaDiCredito;
 }

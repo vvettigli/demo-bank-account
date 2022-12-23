@@ -12,5 +12,5 @@ import lombok.Setter;
 @Entity
 public class ContoBorsellino extends Conto{
     
-    private Boolean meccanismoDiApertura;
+     Boolean meccanismoDiApertura;
 }

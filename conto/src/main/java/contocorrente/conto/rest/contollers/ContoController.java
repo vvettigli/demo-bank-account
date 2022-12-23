@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import contocorrente.conto.Converter.ContoConverter;
-import contocorrente.conto.Converter.UserConverter;
+import contocorrente.conto.Converter.EntityToDtoMapper;
+import contocorrente.conto.HandleException.NullException;
 import contocorrente.conto.dto.ContoDto;
 import contocorrente.conto.dto.OperationDto;
 import contocorrente.conto.dto.UserDto;
+import contocorrente.conto.dto.UserFisicoDto;
+import contocorrente.conto.dto.UserGiuridicoDto;
 import contocorrente.conto.entities.Conto;
+import contocorrente.conto.entities.ContoBanca;
 import contocorrente.conto.entities.Operation;
 import contocorrente.conto.services.ContoService;
 import contocorrente.conto.services.OperationService;
@@ -44,9 +44,7 @@ public class ContoController {
     @Autowired
     ContoService contoService;
     @Autowired
-    ContoConverter contoConverter;
-    @Autowired
-    UserConverter userConverter;
+    EntityToDtoMapper converter;
 
    Logger logger = LoggerFactory.getLogger(ContoController.class);
  
@@ -56,13 +54,33 @@ public class ContoController {
         logger.info("ho chiamato {} method","hellopar");
         return "HELLO";
     }
-    @PostMapping("/user")
+    @PostMapping("/user/")
     public UserDto newUser(@RequestBody @Valid UserDto userDto, BindingResult result){
         if(result.hasErrors()){
            throw new  RuntimeException(result.toString());
         }
         userService.addUser(userDto);
         return userDto;
+        
+    }
+
+    @PostMapping("/user/fisico")
+    public UserDto newUser(@RequestBody @Valid UserFisicoDto userFisicoDto, BindingResult result){
+        if(result.hasErrors()){
+           throw new  RuntimeException(result.toString());
+        }
+        userService.addUser(userFisicoDto);
+        return userFisicoDto;
+        
+    }
+
+    @PostMapping("/user/giuridico")
+    public UserDto newUser(@RequestBody @Valid UserGiuridicoDto userGiuridicoDto, BindingResult result){
+        if(result.hasErrors()){
+           throw new  RuntimeException(result.toString());
+        }
+        userService.addUser(userGiuridicoDto);
+        return userGiuridicoDto;
         
     }
     
@@ -76,7 +94,12 @@ public class ContoController {
     @GetMapping("/allusers")
     public List<UserDto> getAllUser(){
 
-       return userService.getAllUser();
+      List<UserDto> listaUser =  userService.getAllUser();
+        if (listaUser.isEmpty()) {
+            logger.debug("getAllUser end");
+            throw new NullException("non esisteno users");
+        }
+        return listaUser;
 
     }
     
@@ -86,19 +109,30 @@ public class ContoController {
         return userService.updateUser(userDto);
     }
 
-    @DeleteMapping("/user")
-    public void deleteUser(Integer id){
+    @PutMapping("/user/fisico")
+    public UserFisicoDto updateUser(@RequestBody UserFisicoDto userFisicoDto){
+
+        return userService.updateUser(userFisicoDto);
+    }
+
+    @PutMapping("/user/giuridico")
+    public UserGiuridicoDto updateUser(@RequestBody UserGiuridicoDto userGiuridicoDto){
+
+        return userService.updateUser(userGiuridicoDto);
+    }
+
+    @DeleteMapping("/user/{id}")
+    public void deleteUser(@PathVariable Integer id){
         userService.deleteUser(id);
     }
 
-
     @PostMapping("/conto")
-    public ContoDto createConto(@RequestBody @Valid Conto conto, BindingResult result){
+    public ContoDto createConto(@RequestBody @Valid ContoDto contoDto, BindingResult result){
         if(result.hasErrors()){
            throw new  RuntimeException(result.toString());
         }
         
-        return contoService.addConto(conto); 
+        return contoService.addConto(contoDto);
     }
 
     @GetMapping("/conto/{id}")
@@ -160,13 +194,12 @@ public class ContoController {
         OperationDto operationDto = operationServiceInvernale.addOperation(operation);
         Conto conto = operationDto.getConto();
         conto.setSaldo(conto.getSaldo() + operationDto.getAmmontare());
-        ContoDto contoDto = contoConverter.entityToDto(conto);
+        ContoDto contoDto = converter.contoToContoDto(conto);
         contoService.updateConto(contoDto);
         return contoDto;
         
     }
-
-
+        
    
 
     

@@ -3,20 +3,20 @@ package contocorrente.conto.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Table(name = "users")
+@Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class UserGiuridico extends User {
+@Entity
+@Table(name = "usergiuridici", schema = "public")
+public class UserGiuridico extends Users {
 
 
-    @Column(name ="codicefiscale")
+    @Column(name = "partitaiva")
     private String partitaIva;
 
     

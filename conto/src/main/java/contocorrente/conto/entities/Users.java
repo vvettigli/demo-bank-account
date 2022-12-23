@@ -3,6 +3,8 @@ package contocorrente.conto.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -21,7 +23,10 @@ import lombok.ToString;
 @AllArgsConstructor @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-public class User {
+@Table(name = "users", schema = "public")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+
+public class Users {
 
     @Id
     @NotNull 

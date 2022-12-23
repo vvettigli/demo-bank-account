@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import contocorrente.conto.Converter.ContoConverter;
-import contocorrente.conto.Converter.OperationConverter;
+import contocorrente.conto.Converter.EntityToDtoMapper;
 import contocorrente.conto.HandleException.NotFoundException;
 import contocorrente.conto.HandleException.NullException;
 import contocorrente.conto.dao.OperationRepository;
@@ -24,19 +23,17 @@ public class OperationServiceImpl implements OperationService {
     @Autowired
     OperationRepository operationRepository;
     @Autowired
-    OperationConverter operationConverter;
-    @Autowired
     ContoService contoService;
     @Autowired
-    ContoConverter contoConverter;
+    EntityToDtoMapper converter;
 
     public OperationDto addOperation(Operation operation) {
         logger.debug("addOperation start");
-        ContoDto contoDto = contoService.getConto(operation.getConto().getId());
-        operation.setConto(contoConverter.dtoToEntity(contoDto));
+        ContoDto contoDto = contoService.getConto(operation.getConto().getContoid());
+        operation.setConto(converter.contoDtoToConto(contoDto));
         operationRepository.save(operation);
         logger.debug("addOperation end");
-        return operationConverter.entityToDto(operation);
+        return converter.operationToOperationDto(operation);
     }
 
     public List<OperationDto> getAllOperations() {
@@ -44,7 +41,7 @@ public class OperationServiceImpl implements OperationService {
         if (listaOperation.isEmpty()) {
             throw new NullException("non esistono conti");
         }
-        return operationConverter.allEntityToDto(listaOperation);
+        return converter.allOperationEntitiesToOperationDto(listaOperation);
     }
     //NON SO DOVE METTERE logger.debug("addOperation end");
 
@@ -54,7 +51,7 @@ public class OperationServiceImpl implements OperationService {
         Operation operation = operationRepository.findById(id)
                 .orElseThrow(() ->  NotFoundException.of("l'operazione con id " + id + " non esiste"));
 
-        return operationConverter.entityToDto(operation);
+        return converter.operationToOperationDto(operation);
 
     }
 
@@ -63,15 +60,15 @@ public class OperationServiceImpl implements OperationService {
                 .orElseThrow(() -> NotFoundException.of("l'operazione con id " + operationDtoUpdate.getId() + " non esiste"));
 
         operationDtoUpdate.setConto(operation.getConto());
-        operation = operationConverter.dtoToEntity(operationDtoUpdate);
+        operation = converter.operationDtoToOperation(operationDtoUpdate);
         operationRepository.save(operation);
-        return operationConverter.entityToDto(operation);
+        return converter.operationToOperationDto(operation);
 
     }
 
     public void deleteOperation(Integer id) {
         logger.debug("deleteOperation start");
-        Operation operationDaEliminare = operationConverter.dtoToEntity(getOperation(id));
+        Operation operationDaEliminare = converter.operationDtoToOperation(getOperation(id));
         operationRepository.delete(operationDaEliminare);
         logger.debug("deleteOperation end");
 

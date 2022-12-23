@@ -2,10 +2,7 @@ package contocorrente.conto.dto;
 
 import java.util.Set;
 
-import contocorrente.conto.entities.Operation;
-import contocorrente.conto.entities.User;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,8 +12,8 @@ import lombok.Setter;
 
 public class ContoDto {
     Integer id;
-    User user;
+    UserDto userDto;
     Double saldo;
-    Set<Operation> operation;
+    Set<OperationDto> operationDto;
     
 }

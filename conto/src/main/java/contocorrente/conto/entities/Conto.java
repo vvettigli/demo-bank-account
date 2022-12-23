@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,16 +27,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @Table(name = "conti")
 public class Conto {
     @Id
     @NotNull 
     @Column(name = "contoid")
-    private Integer id;
+    private Integer contoid;
 
     @ManyToOne
     @JoinColumn(name = "userid")
-    private User user;
+    private Users user;
 
     @Column(name = "saldo")
     @NotNull(message = "inserire il saldo")

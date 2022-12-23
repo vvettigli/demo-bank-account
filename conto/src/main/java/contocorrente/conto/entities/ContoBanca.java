@@ -12,5 +12,5 @@ import lombok.Setter;
 @Entity
 public class ContoBanca extends Conto{
     
-    private String IBAN;
+     String iban;
 }

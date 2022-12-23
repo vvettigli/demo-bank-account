@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
-public class ContoBorsellino extends ContoDto {
+public class ContoBorsellinoDto extends ContoDto {
     
-    private Boolean meccanismoDiApertura;
+     Boolean meccanismoDiApertura;
 }

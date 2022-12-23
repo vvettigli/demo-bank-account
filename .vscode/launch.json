@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch AlgoritmoSort",
+            "request": "launch",
+            "mainClass": "AlgoritmoSort",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-ContoApplication<conto>",
             "request": "launch",
             "cwd": "${workspaceFolder}/conto",

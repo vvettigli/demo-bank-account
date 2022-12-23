@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
-public class ContoBanca extends ContoDto {
+public class ContoBancaDto extends ContoDto {
     
-    private String IBAN;
+     String iban;
 }

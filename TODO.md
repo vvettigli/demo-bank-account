@@ -23,3 +23,10 @@
      - ~~SLF4J spring~~
 9. ~~Dependency Injection~~
 10. Spring  (Approfondimento) 
+
+
+DA FINIRE
+=======
+1. modoto delete in UserServiceImpl
+2. implementare converter di ContoBanca , ContoBorsellino , ContoPaypal
+3. update ContoServiceImpl con i nuovi DTO
