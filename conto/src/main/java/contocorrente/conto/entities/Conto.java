@@ -21,7 +21,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @Setter @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,7 +35,7 @@ public class Conto {
     @Id
     @NotNull 
     @Column(name = "contoid")
-    private Integer contoid;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "userid")
@@ -46,7 +48,7 @@ public class Conto {
     @JsonManagedReference
     @OneToMany(
         mappedBy = "conto",
-        fetch = FetchType.LAZY)
+        fetch = FetchType.EAGER)
     private Set<Operation> operation;
 
 }

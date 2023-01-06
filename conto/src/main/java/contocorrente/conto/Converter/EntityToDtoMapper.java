@@ -3,7 +3,7 @@ package contocorrente.conto.Converter;
 import java.util.List;
 
 import org.mapstruct.Mapper;
-
+import org.mapstruct.Mapping;
 
 import contocorrente.conto.dto.ContoBancaDto;
 import contocorrente.conto.dto.ContoBorsellinoDto;
@@ -45,20 +45,36 @@ public interface EntityToDtoMapper {
 
      //////////////////////////////////////////////////////
 
+     @Mapping(target = "userDto" , source = "user")
+     @Mapping(target = "operationDto" , source = "operation")
      ContoDto contoToContoDto(Conto conto);
 
+     @Mapping(target = "userDto" , source = "user")
+     @Mapping(target = "operationDto" , source = "operation")
      ContoBancaDto contoBancaToContoBancaDto(ContoBanca contoBanca);
 
+     @Mapping(target = "userDto" , source = "user")
+     @Mapping(target = "operationDto" , source = "operation")
      ContoPaypalDto contoPaypalToContoPaypalDto(ContoPaypal contoPaypal);
 
+     @Mapping(target = "userDto" , source = "user")
+     @Mapping(target = "operationDto" , source = "operation")
      ContoBorsellinoDto contoBorsellinoToContoBorsellinoDto(ContoBorsellino contoBorsellino);
 
+     @Mapping(target = "user" , source = "userDto")
+     @Mapping(target = "operation" , source = "operationDto")
      Conto contoDtoToConto(ContoDto contoDto);
-
+     
+     @Mapping(target = "user" , source = "userDto")
+     @Mapping(target = "operation" , source = "operationDto")
      ContoBanca contoBancaDtoToContoBanca(ContoBancaDto contoBancaDto);
 
+     @Mapping(target = "user" , source = "userDto")
+     @Mapping(target = "operation" , source = "operationDto")
      ContoPaypal contoPaypaDtolToContoPaypal(ContoPaypalDto contoPaypalDto);
 
+     @Mapping(target = "user" , source = "userDto")
+     @Mapping(target = "operation" , source = "operationDto")
      ContoBorsellino contoBorsellinoDtoToContoBorsellino(ContoBorsellinoDto contoBorsellinoDto);
 
      List<ContoDto> allContoEntitiesToContoDto (List<Conto> lista);
