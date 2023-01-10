@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
@@ -30,6 +31,7 @@ import lombok.experimental.SuperBuilder;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+
 @Table(name = "conti")
 public class Conto {
     @Id
@@ -45,7 +47,9 @@ public class Conto {
     @NotNull(message = "inserire il saldo")
     private Double saldo;
 
+    @ToString.Exclude
     @JsonManagedReference
+    @JsonIgnoreProperties("conto")
     @OneToMany(
         mappedBy = "conto",
         fetch = FetchType.EAGER)

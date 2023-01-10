@@ -3,6 +3,8 @@ package contocorrente.conto.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import contocorrente.conto.dto.ContoDto;
 import contocorrente.conto.dto.OperationDto;
 import contocorrente.conto.entities.Operation;
 
+@Transactional
 @Service
 public class OperationServiceImpl implements OperationService {
 
@@ -27,9 +30,10 @@ public class OperationServiceImpl implements OperationService {
     @Autowired
     EntityToDtoMapper converter;
 
-    public OperationDto addOperation(Operation operation) {
+    public OperationDto addOperation(OperationDto operationDto) {
         logger.debug("addOperation start");
-        ContoDto contoDto = contoService.getConto(operation.getConto().getId());
+        ContoDto contoDto = contoService.getConto(operationDto.getContoDto().getId());
+        Operation operation = converter.operationDtoToOperation(operationDto);
         operation.setConto(converter.contoDtoToConto(contoDto));
         operationRepository.save(operation);
         logger.debug("addOperation end");
@@ -43,7 +47,6 @@ public class OperationServiceImpl implements OperationService {
         }
         return converter.allOperationEntitiesToOperationDto(listaOperation);
     }
-    //NON SO DOVE METTERE logger.debug("addOperation end");
 
     public OperationDto getOperation(Integer id) {
         logger.debug("getOperation start");
@@ -58,8 +61,8 @@ public class OperationServiceImpl implements OperationService {
     public OperationDto updateOperation(OperationDto operationDtoUpdate) {
         Operation operation = operationRepository.findById(operationDtoUpdate.getId())
                 .orElseThrow(() -> NotFoundException.of("l'operazione con id " + operationDtoUpdate.getId() + " non esiste"));
-
-        operationDtoUpdate.setConto(operation.getConto());
+        OperationDto operationDto = converter.operationToOperationDto(operation);
+        operationDtoUpdate.setContoDto(operationDto.getContoDto());
         operation = converter.operationDtoToOperation(operationDtoUpdate);
         operationRepository.save(operation);
         return converter.operationToOperationDto(operation);

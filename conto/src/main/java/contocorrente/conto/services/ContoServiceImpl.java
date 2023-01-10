@@ -3,6 +3,8 @@ package contocorrente.conto.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ import contocorrente.conto.entities.ContoBanca;
 import contocorrente.conto.entities.ContoBorsellino;
 import contocorrente.conto.entities.ContoPaypal;
 
+@Transactional
 @Service
 public class ContoServiceImpl implements ContoService {
 

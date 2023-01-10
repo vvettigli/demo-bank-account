@@ -160,9 +160,9 @@ public class ContoController {
 
 
     @PostMapping("/operation")
-    public OperationDto newOperation(@RequestBody Operation operation) {
+    public OperationDto newOperation(@RequestBody OperationDto operationDto) {
         
-        return operationServiceInvernale.addOperation(operation);
+        return operationServiceInvernale.addOperation(operationDto);
     }
 
     @GetMapping("/operation/{id}")
@@ -190,11 +190,10 @@ public class ContoController {
     }
         
     @PostMapping("/deposito")
-    public ContoDto deposito(@RequestBody @Valid Operation operation){
-        OperationDto operationDto = operationServiceInvernale.addOperation(operation);
-        Conto conto = operationDto.getConto();
-        conto.setSaldo(conto.getSaldo() + operationDto.getAmmontare());
-        ContoDto contoDto = converter.contoToContoDto(conto);
+    public ContoDto deposito(@RequestBody @Valid OperationDto operationDto){
+        operationServiceInvernale.addOperation(operationDto);
+        ContoDto contoDto = operationDto.getContoDto();
+        contoDto.setSaldo(contoDto.getSaldo() + operationDto.getAmmontare());
         contoService.updateConto(contoDto);
         return contoDto;
         

@@ -7,10 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,10 +18,8 @@ import contocorrente.conto.dto.ContoBancaDto;
 import contocorrente.conto.dto.ContoBorsellinoDto;
 import contocorrente.conto.dto.ContoDto;
 import contocorrente.conto.dto.ContoPaypalDto;
-import contocorrente.conto.dto.OperationDto;
 import contocorrente.conto.dto.UserDto;
 import contocorrente.conto.entities.Conto;
-import contocorrente.conto.entities.ContoBorsellino;
 import contocorrente.conto.services.ContoService;
 import contocorrente.conto.services.UserService;
 

@@ -2,6 +2,8 @@ package contocorrente.conto.Converter;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -77,14 +79,16 @@ public interface EntityToDtoMapper {
      @Mapping(target = "operation" , source = "operationDto")
      ContoBorsellino contoBorsellinoDtoToContoBorsellino(ContoBorsellinoDto contoBorsellinoDto);
 
+     @Mapping(target = "operation" , ignore = true)
      List<ContoDto> allContoEntitiesToContoDto (List<Conto> lista);
 
      List<Conto> allContoDtoToContoEntities (List<ContoDto> lista);
 
      //////////////////////////////////////////////////////
-
+     // @Mapping(target = "contoDto" , source = "conto")
      OperationDto operationToOperationDto (Operation operation);
 
+     @Mapping(target = "conto" , source = "contoDto")
      Operation operationDtoToOperation (OperationDto operationDto);
 
      List<OperationDto> allOperationEntitiesToOperationDto (List<Operation> lista);

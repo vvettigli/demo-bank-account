@@ -9,8 +9,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 @Entity
 @Table(name = "operations")
 public class Operation {
@@ -31,6 +34,8 @@ public class Operation {
     
    @JsonBackReference
    @ManyToOne
+   @Getter(AccessLevel.NONE)
+   @JsonIgnoreProperties("operation")
    @JoinColumn(name = "contoid")
     private Conto conto;
 

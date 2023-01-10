@@ -3,11 +3,10 @@ package contocorrente.conto.services;
 import java.util.List;
 
 import contocorrente.conto.dto.OperationDto;
-import contocorrente.conto.entities.Operation;
 
 public interface OperationService {
 
-    public OperationDto addOperation(Operation operation);
+    public OperationDto addOperation(OperationDto operation);
 
     public List<OperationDto> getAllOperations();
 
